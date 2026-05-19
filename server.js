@@ -8,6 +8,24 @@ const fs = require('fs');
 const { initDb, getDb, hasBookingConflict } = require('./db');
 const { validateServiceBooking } = require('./db/validators');
 const { userHasBooking, formatReviewRow } = require('./db/reviews');
+const XLSX = require('xlsx');
+
+function parseMonthParam(month) {
+  if (!month || !/^\d{4}-\d{2}$/.test(month)) return null;
+  const [y, m] = month.split('-').map(Number);
+  if (m < 1 || m > 12) return null;
+  const monthStart = `${month}-01`;
+  const nextM = m === 12 ? 1 : m + 1;
+  const nextY = m === 12 ? y + 1 : y;
+  const monthEndExclusive = `${nextY}-${String(nextM).padStart(2, '0')}-01`;
+  return { month, monthStart, monthEndExclusive, label: month };
+}
+
+function nightsBetween(checkIn, checkOut) {
+  const a = new Date(String(checkIn).slice(0, 10) + 'T12:00:00');
+  const b = new Date(String(checkOut).slice(0, 10) + 'T12:00:00');
+  return Math.max(0, Math.round((b - a) / 86400000));
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -347,6 +365,72 @@ app.get(
        ORDER BY b.check_in DESC`
     );
     res.json(bookings);
+  })
+);
+
+app.get(
+  '/api/admin/bookings/export',
+  requireAuth,
+  requireAdmin,
+  asyncRoute(async (req, res) => {
+    const parsed = parseMonthParam(req.query.month);
+    if (!parsed) {
+      return res.status(400).json({ error: 'Укажите месяц в формате YYYY-MM (например, 2025-05)' });
+    }
+
+    const db = getDb();
+    const bookings = await db.all(
+      `SELECT b.id, b.check_in, b.check_out, b.created_at,
+              u.login, r.name AS room_name, r.type AS room_type, r.price
+       FROM bookings b
+       JOIN users u ON u.id = b.user_id
+       JOIN rooms r ON r.id = b.room_id
+       WHERE b.check_in < ? AND b.check_out > ?
+       ORDER BY b.check_in ASC`,
+      [parsed.monthEndExclusive, parsed.monthStart]
+    );
+
+    const rows = bookings.map((b) => {
+      const nights = nightsBetween(b.check_in, b.check_out);
+      const price = Number(b.price) || 0;
+      return {
+        ID: b.id,
+        Логин: b.login,
+        Номер: b.room_name,
+        'Тип номера': b.room_type,
+        Заезд: String(b.check_in).slice(0, 10),
+        Выезд: String(b.check_out).slice(0, 10),
+        Ночей: nights,
+        'Цена за ночь': price,
+        'Сумма (₽)': nights * price,
+        'Дата бронирования': String(b.created_at || '').slice(0, 19).replace('T', ' '),
+      };
+    });
+
+    const ws = XLSX.utils.json_to_sheet(rows);
+    ws['!cols'] = [
+      { wch: 6 },
+      { wch: 14 },
+      { wch: 22 },
+      { wch: 12 },
+      { wch: 12 },
+      { wch: 12 },
+      { wch: 8 },
+      { wch: 14 },
+      { wch: 12 },
+      { wch: 20 },
+    ];
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, `Брони ${parsed.month}`);
+    const buffer = XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
+
+    const filename = `novotel-bookings-${parsed.month}.xlsx`;
+    res.setHeader(
+      'Content-Type',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    );
+    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+    res.send(buffer);
   })
 );
 

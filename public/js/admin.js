@@ -139,6 +139,7 @@ document.querySelectorAll('.nav-tab').forEach((tab) => {
     document.getElementById('roomsPanel').classList.toggle('hidden', tab.dataset.panel !== 'roomsPanel');
     document.getElementById('servicesPanel').classList.toggle('hidden', tab.dataset.panel !== 'servicesPanel');
     document.getElementById('reviewsPanel').classList.toggle('hidden', tab.dataset.panel !== 'reviewsPanel');
+    document.getElementById('exportPanel').classList.toggle('hidden', tab.dataset.panel !== 'exportPanel');
     if (tab.dataset.panel === 'servicesPanel' && window.loadServicesAdmin) {
       window.loadServicesAdmin();
     }

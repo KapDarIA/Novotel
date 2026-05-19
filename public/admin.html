@@ -19,6 +19,7 @@
       <button type="button" class="nav-tab active" data-panel="roomsPanel">Номера</button>
       <button type="button" class="nav-tab" data-panel="servicesPanel">Услуги</button>
       <button type="button" class="nav-tab" data-panel="reviewsPanel">Отзывы</button>
+      <button type="button" class="nav-tab" data-panel="exportPanel">Excel</button>
       <a href="/">На сайт</a>
       <a href="/profile.html">Профиль</a>
     </nav>
@@ -123,6 +124,21 @@
       </table>
     </section>
 
+    <section id="exportPanel" class="hidden">
+      <h1 class="page-title">Экспорт бронирований в Excel</h1>
+      <div id="exportAlert" class="alert hidden"></div>
+      <div class="admin-room-form">
+        <p style="margin-bottom:1rem;color:var(--muted)">
+          В файл попадут бронирования номеров, у которых период проживания пересекается с выбранным месяцем.
+        </p>
+        <div class="form-group">
+          <label for="exportMonth">Месяц</label>
+          <input type="month" id="exportMonth" required>
+        </div>
+        <button type="button" id="downloadExcelBtn" class="btn btn-primary">Скачать Excel</button>
+      </div>
+    </section>
+
     <section id="reviewsPanel" class="hidden">
       <h1 class="page-title">Модерация отзывов</h1>
       <table class="admin-table">
@@ -145,5 +161,6 @@
   <script src="/js/admin.js"></script>
   <script src="/js/admin-services.js"></script>
   <script src="/js/admin-reviews.js"></script>
+  <script src="/js/admin-export.js"></script>
 </body>
 </html>
