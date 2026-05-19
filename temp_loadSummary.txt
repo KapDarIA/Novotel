@@ -1,0 +1,21 @@
+async function loadSummary() {
+  const summary = await api('/api/reviews/summary');
+  if (summary.count === 0) {
+    reviewsSummary.innerHTML =
+      '<div><p class="reviews-summary__score">—</p><p>Пока нет отзывов. Станьте первым!</p></div>';
+    return;
+  }
+  reviewsSummary.innerHTML =
+    '<div>' +
+    '<p class="reviews-summary__score">' +
+    summary.average +
+    '</p>' +
+    '<p class="reviews-summary__stars">' +
+    renderStars(Math.round(summary.average)) +
+    '</p>' +
+    '<p style="color:var(--muted)">на основе ' +
+    summary.count +
+    ' ' +
+    pluralReviews(summary.count) +
+    '</p></div>';
+}

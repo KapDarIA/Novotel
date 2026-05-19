@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Бронирование услуги — Novotel</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a href="/" class="site-logo">Novotel</a>
+      <nav class="site-nav">
+        <a href="/">Номера</a>
+        <a href="/services.html" class="active">Услуги</a>
+        <a href="/reviews.html">Отзывы</a>
+      </nav>
+    </div>
+    <a href="/login.html" id="userIconLink" class="user-icon-link" title="Войти">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    </a>
+  </header>
+
+  <main class="container">
+    <p><a href="/services.html">← Все услуги</a></p>
+    <div id="serviceInfo"></div>
+
+    <div class="form-card">
+      <h2 class="page-title">Забронировать услугу</h2>
+      <div id="alert" class="alert hidden"></div>
+      <form id="serviceBookingForm" class="hidden">
+        <div class="form-group">
+          <label for="booking_id">Ваше бронирование номера</label>
+          <select id="booking_id" name="booking_id" required></select>
+        </div>
+        <div class="form-group">
+          <label for="service_date">Дата (в период проживания)</label>
+          <input type="date" id="service_date" name="service_date" required>
+        </div>
+        <div class="form-group">
+          <label for="service_time">Время</label>
+          <input type="time" id="service_time" name="service_time">
+        </div>
+        <div class="form-group">
+          <label for="notes">Комментарий (меню, пожелания)</label>
+          <textarea id="notes" name="notes" placeholder="Например: завтрак на двоих, без лука…"></textarea>
+        </div>
+        <button type="submit" class="btn btn-gold btn-block">Подтвердить</button>
+      </form>
+      <div id="noBookingMsg" class="hint-box hidden"></div>
+    </div>
+  </main>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/service-booking.js"></script>
+</body>
+</html>

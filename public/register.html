@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Регистрация — Novotel</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-logo">Novotel</a>
+    <a href="/login.html" id="userIconLink" class="user-icon-link" title="Войти">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    </a>
+  </header>
+
+  <main class="container">
+    <div class="auth-card">
+      <h1 class="page-title">Регистрация</h1>
+      <div id="alert" class="alert alert-error hidden"></div>
+      <form id="authForm">
+        <div class="form-group">
+          <label for="login">Логин (от 3 символов)</label>
+          <input type="text" id="login" name="login" required minlength="3" autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label for="password">Пароль (от 6 символов)</label>
+          <input type="password" id="password" name="password" required minlength="6" autocomplete="new-password">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
+      </form>
+      <p class="form-footer">Уже есть аккаунт? <a href="/login.html">Войти</a></p>
+    </div>
+  </main>
+
+  <script src="/js/api.js"></script>
+  <script>document.body.dataset.mode = 'register';</script>
+  <script src="/js/auth.js"></script>
+</body>
+</html>

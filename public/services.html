@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Услуги — Novotel</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a href="/" class="site-logo">Novotel</a>
+      <nav class="site-nav">
+        <a href="/">Номера</a>
+        <a href="/services.html" class="active">Услуги</a>
+        <a href="/reviews.html">Отзывы</a>
+      </nav>
+    </div>
+    <a href="/login.html" id="userIconLink" class="user-icon-link" title="Войти">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    </a>
+  </header>
+
+  <main class="container">
+    <h1 class="page-title">Услуги отеля</h1>
+    <div class="hint-box">
+      Заказ услуг доступен только при активном бронировании номера — на даты вашего проживания.
+    </div>
+
+    <section class="filters-bar">
+      <input type="search" id="search" placeholder="Поиск услуги..." autocomplete="off">
+      <select id="categoryFilter" aria-label="Категория">
+        <option value="all">Все категории</option>
+      </select>
+    </section>
+
+    <div id="servicesGrid" class="rooms-grid"></div>
+  </main>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/services.js"></script>
+</body>
+</html>

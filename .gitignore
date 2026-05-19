@@ -1,0 +1,5 @@
+node_modules/
+.env
+novotel.db
+public/uploads/*
+!public/uploads/.gitkeep
