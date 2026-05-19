@@ -14,16 +14,16 @@
 
 ## Запуск в VS Code
 
-1. Установите [Node.js](https://nodejs.org/) **22.5 или новее** (у вас подойдёт текущая v24).
-2. Откройте папку проекта в VS Code.
-3. В терминале выполните:
+1. Установить [Node.js](https://nodejs.org/) **22.5 или новее**
+2. Откройть папку проекта в VS Code.
+3. В терминале выполнить:
 
 ```bash
 npm install
 npm start
 ```
 
-4. Откройте в браузере: **http://localhost:3000**
+4. Открыть в браузере: **http://localhost:3000**
 
 ## Учётные записи по умолчанию
 
@@ -32,24 +32,22 @@ npm start
 | Админ | admin | admin123 |
 | Пользователь | user | user123 |
 
-Новых пользователей можно зарегистрировать на странице «Регистрация».
-
 ## Подключение MySQL
 
-1. Установите MySQL (или XAMPP / OpenServer с MySQL).
-2. Создайте базу — выполните скрипт `schema-mysql.sql` в MySQL Workbench или:
+1. Установить MySQL (или XAMPP / OpenServer с MySQL).
+2. Создать базу — выполнить скрипт `schema-mysql.sql` в MySQL Workbench или:
 
 ```bash
 mysql -u root -p < schema-mysql.sql
 ```
 
-3. Скопируйте настройки:
+3. Скопировать настройки:
 
 ```bash
 copy .env.example .env
 ```
 
-4. В файле `.env` укажите:
+4. В файле `.env` указать:
 
 ```env
 DB_TYPE=mysql
@@ -60,7 +58,7 @@ MYSQL_PASSWORD=ваш_пароль
 MYSQL_DATABASE=novotel_db
 ```
 
-5. Запустите сайт: `npm install` → `npm start`.
+5. Запустить сайт: `npm install` → `npm start`.
 
 Таблицы создадутся автоматически, если их ещё нет. Демо-пользователи и номера добавятся при первом запуске.
 
